@@ -1,4 +1,3 @@
-import { Json } from "./../schema";
 import { create } from "zustand";
 
 interface GptState {
