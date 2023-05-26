@@ -9,7 +9,7 @@ export function GptOutput() {
     <div className="card w-full bg-base-200 shadow-xl">
       {response && (
         <div className="card-body">
-          <p className="text-sm font-mono">{response}</p>
+          <p className="text-sm font-mono whitespace-pre-line">{response}</p>
         </div>
       )}
       {!response && (
