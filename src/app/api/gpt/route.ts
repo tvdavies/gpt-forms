@@ -2,17 +2,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { env } from "@/env.mjs";
 import { CompletionChunkToTextContentStream } from "@/lib/gpt";
+import { prompts } from "@/prompts/prompts";
 
 const bodySchema = z.record(z.string()).and(
   z.object({
-    $template: z.string(),
+    $prompt: z.string().min(1),
   })
 );
 
 export async function POST(req: NextRequest) {
-  const { $template, ...data } = bodySchema.parse(await req.json());
-  const prompt = $template.replace(/{{(\w+)}}/g, (_, key) => data[key]);
+  const { $prompt, ...data } = bodySchema.parse(await req.json());
+  const prompt = prompts.find((p) => p.slug === $prompt);
 
+  if (!prompt) {
+    return NextResponse.error();
+  }
+
+  const message = prompt.template.replace(/{{(\w+)}}/g, (_, key) => data[key]);
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -20,8 +26,8 @@ export async function POST(req: NextRequest) {
       Authorization: `Bearer ${env.OPENAI_API_KEY}`,
     },
     body: JSON.stringify({
-      model: "gpt-4",
-      messages: [{ role: "user", content: prompt }],
+      model: prompt.model,
+      messages: [{ role: "user", content: message }],
       stream: true,
     }),
   });

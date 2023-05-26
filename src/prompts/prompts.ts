@@ -11,6 +11,7 @@ interface PromptInput {
 }
 
 export interface Prompt {
+  model: "gpt-4" | "gpt-3.5-turbo";
   name: string;
   description: string;
   template: string;

@@ -37,7 +37,7 @@ export function PromptForm({ prompt }: { prompt: Prompt }) {
   return (
     <form className="card bg-base-200 shadow-xl w-full" onSubmit={submit}>
       <div className="card-body w-full flex flex-col gap-6">
-        <input type="hidden" name="$template" value={prompt.template} />
+        <input type="hidden" name="$prompt" value={prompt.slug} />
         {form}
         <button type="submit" className="btn btn-primary">
           Submit

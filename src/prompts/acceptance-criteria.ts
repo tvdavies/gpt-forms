@@ -1,6 +1,7 @@
 import { Prompt } from "./prompts";
 
 export default {
+  model: "gpt-3.5-turbo",
   name: "Create acceptance criteria",
   description: "Create acceptance criteria for a feature.",
   inputs: [

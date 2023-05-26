@@ -1,6 +1,7 @@
 import { Prompt } from "./prompts";
 
 export default {
+  model: "gpt-3.5-turbo",
   name: "Create user story",
   description: "Create a user story for a feature.",
   inputs: [
